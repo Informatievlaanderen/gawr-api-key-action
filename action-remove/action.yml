@@ -1,0 +1,79 @@
+name: gawr-remove-apikey-action
+description: GAWR ApiKey Management Tool
+author: Digitaal Vlaanderen
+inputs:
+  apikey:
+    description: 'ApiKey'
+    required: true
+
+  env-tst:
+    description: 'Test'
+    required: true
+   
+  env-stg:
+    description: 'Staging'
+    required: true
+   
+  env-prd:
+    description: 'Production'
+    required: true
+
+  aws-tst-access-key-id:
+    description: 'AWS Acces Key Id Test ENV'
+    required: true
+    
+  aws-tst-secret-access-key:
+    description: 'AWS Secret Key Test ENV'
+    required: true
+    
+  aws-tst-region-name:
+    description: 'AWS Region name Test ENV'
+    required: false
+    default: 'eu-west-1'
+
+  aws-stg-access-key-id:
+    description: 'AWS Acces Key Id Staging ENV'
+    required: true
+    
+  aws-stg-secret-access-key:
+    description: 'AWS Secret Key Staging ENV'
+    required: true
+    
+  aws-stg-region-name:
+    description: 'AWS Region name Staging ENV'
+    required: false
+    default: 'eu-west-1'
+
+  aws-prd-access-key-id:
+    description: 'AWS Acces Key Id Production ENV'
+    required: true
+    
+  aws-prd-secret-access-key:
+    description: 'AWS Secret Key Production ENV'
+    required: true
+    
+  aws-prd-region-name:
+    description: 'AWS Region name Production ENV'
+    required: false
+    default: 'eu-west-1'
+
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.0-remove'
+  args:
+    - ${{ inputs.apikey }}
+    - ${{ inputs.env-tst }}
+    - ${{ inputs.env-stg }}
+    - ${{ inputs.env-prd }}
+    - ${{ inputs.aws-tst-access-key-id}}
+    - ${{ inputs.aws-tst-secret-access-key}}
+    - ${{ inputs.aws-tst-region-name}}
+    - ${{ inputs.aws-stg-access-key-id}}
+    - ${{ inputs.aws-stg-secret-access-key}}
+    - ${{ inputs.aws-stg-region-name}}
+    - ${{ inputs.aws-prd-access-key-id}}
+    - ${{ inputs.aws-prd-secret-access-key}}
+    - ${{ inputs.aws-prd-region-name}}
+branding:
+  icon: 'terminal'
+  color: 'yellow'

@@ -1,0 +1,80 @@
+name: Update client apikey
+on:
+  workflow_dispatch:
+    inputs:
+      api-key:
+       description: 'Api Key'     
+       required: true
+
+      grant-access-road-registry:
+        type: boolean
+        description: 'Grant road-registry access'
+        required: true 
+         
+      grant-access-sync:
+        type: boolean
+        description: 'Grant sync access'
+        required: true
+
+      client:
+        description: 'ClientName'     
+        required: true
+        
+      email:
+        description: 'Email'     
+        required: true
+
+      plan:
+        type: choice
+        description: 'Plan'
+        options:
+        - anon
+        - standard
+        - unlimited
+        default: anon
+
+      apply-env-tst:
+        type: boolean
+        description: 'Test'
+        required: true
+
+      apply-env-stg:
+        type: boolean
+        description: 'Staging'
+        required: true
+        
+      apply-env-prd:
+        type: boolean
+        description: 'Production'
+        required: true
+
+jobs:
+  gawr:
+    runs-on: ubuntu-latest
+    steps:
+    - name: update client apikey
+      uses: informatievlaanderen/gawr-api-key-action/action-update@main
+      with:
+          apikey: ${{github.event.inputs.api-key}}
+          client:  ${{ github.event.inputs.client }}
+          email: ${{ github.event.inputs.email }}
+          plan:  ${{ github.event.inputs.plan }}
+          
+          access-sync:  ${{ github.event.inputs.grant-access-sync }}
+          access-road-registry:  ${{ github.event.inputs.grant-access-road-registry }}
+          
+          env-tst:  ${{ github.event.inputs.apply-env-tst }}
+          env-stg:  ${{ github.event.inputs.apply-env-stg }}
+          env-prd:  ${{ github.event.inputs.apply-env-prd }}
+          
+          aws-tst-access-key-id: ${{ secrets.AWS_TST_ACCESS_KEY_ID }}
+          aws-stg-access-key-id: ${{ secrets.AWS_STG_ACCESS_KEY_ID }}
+          aws-prd-access-key-id: ${{ secrets.AWS_PRD_ACCESS_KEY_ID }}
+
+          aws-tst-secret-access-key: ${{ secrets.AWS_TST_SECRET_ACCESS_KEY }}
+          aws-stg-secret-access-key: ${{ secrets.AWS_STG_SECRET_ACCESS_KEY }}
+          aws-prd-secret-access-key: ${{ secrets.AWS_PRD_SECRET_ACCESS_KEY }}
+          
+          aws-tst-region-name: eu-west-1
+          aws-stg-region-name: eu-west-1
+          aws-prd-region-name: eu-west-1
