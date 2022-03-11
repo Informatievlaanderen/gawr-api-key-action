@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: update client apikey
-      uses: informatievlaanderen/gawr-api-key-action/action-update@main
+      uses: informatievlaanderen/gawr-api-key-action/action-update@test
       with:
           apikey: ${{github.event.inputs.api-key}}
           client:  ${{ github.event.inputs.client }}
@@ -80,7 +80,7 @@ jobs:
           aws-tst-secret-access-key: ${{ secrets.AWS_TST_SECRET_ACCESS_KEY }}
           aws-stg-secret-access-key: ${{ secrets.AWS_STG_SECRET_ACCESS_KEY }}
           aws-prd-secret-access-key: ${{ secrets.AWS_PRD_SECRET_ACCESS_KEY }}
-          
+
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
