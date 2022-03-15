@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(description='add new client apikey')
 
 parser.add_argument('-c','--client', help='client name', required=True)
 parser.add_argument('-e','--email', help='email', required=True)
-parser.add_argument('-p','--plan', help='plan options are ["anon", "standard", "unlimited"]', required=True, default="anon")
+parser.add_argument('-p','--plan', help='plan options are ["anon", "standard", "unlimited"]', required=True, default="standard")
 
 parser.add_argument('--access-sync', help='["true", "false"] default: false', required=False, default='false')
 parser.add_argument('--access-road-registry', help='["true", "false"] default: false', required=False, default='false')
@@ -37,12 +37,12 @@ def get_db_table(session):
     return session.resource('dynamodb').Table('basisregisters-api-gate-keys')
 
 def generate_client_api_key():
-    if(args.plan == 'standard'):
-        usage_plan_id = 'yhlc48'
-    elif(args.plan == 'unlimited'):
-        usage_plan_id = 'yhlc48' #NOT YET SUPPORTED BUT PROBABLY WILL WITH ANOTHER PLAN ID
-    else:
+    if(args.plan == 'anon'):
         usage_plan_id = 'l80flj'
+    elif(args.plan == 'unlimited'):
+        usage_plan_id = '6rhww4'
+    else:
+        usage_plan_id = 'yhlc48'
 
     client_api_key = {
             "ApiKey": str(uuid.uuid4()),

@@ -37,7 +37,7 @@ on:
         - anon
         - standard
         - unlimited
-        default: anon
+        default: standard
 
       apply-env-tst:
         type: boolean
