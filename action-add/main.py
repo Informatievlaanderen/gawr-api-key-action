@@ -29,25 +29,36 @@ parser.add_argument('--aws-prd-secret-access-key', required=True)
 parser.add_argument('--aws-prd-region-name', required=False, default='eu-west-1')
 
 args = parser.parse_args()
-  
+
+usage_plan_ids = {
+    "anon": {
+        "tst":"l80flj",
+        "stg":"dyzrte",
+        "prd":"2wb5cd",
+    },
+    "standard": {
+        "tst":"yhlc48",
+        "stg":"oh8xgc",
+        "prd":"m8vqe3",
+    },
+    "unlimited": {
+        "tst":"6rhww4",
+        "stg":"5fbb32",
+        "prd":"r5patr",
+    }
+}
+
 def start_session(aws_access_key_id, aws_secret_access_key, region_name):
     return boto3.Session(aws_access_key_id, aws_secret_access_key, region_name=region_name)
 
 def get_db_table(session):
     return session.resource('dynamodb').Table('basisregisters-api-gate-keys')
 
-def generate_client_api_key():
-    if(args.plan == 'anon'):
-        usage_plan_id = 'l80flj'
-    elif(args.plan == 'unlimited'):
-        usage_plan_id = '6rhww4'
-    else:
-        usage_plan_id = 'yhlc48'
-
+def get_client_api_key(apikey, env):
     client_api_key = {
-            "ApiKey": str(uuid.uuid4()),
+            "ApiKey": apikey,
             "SyncAccess": args.access_sync == 'true',
-            "UsagePlanID": usage_plan_id,
+            "UsagePlanID": usage_plan_ids[args.plan][env],
             "Description": args.email,
             "WrAccess": args.access_road_registry == 'true',
             "ClientName": args.client,
@@ -58,7 +69,7 @@ def generate_client_api_key():
 def json_serialize(obj):
     return json.dumps(obj, separators=(',', ':'))
 
-def add_apikey(client_apikey):
+def add_apikey(apikey):
     apply_in_tst = args.env_tst == 'true'
     apply_in_stg = args.env_stg == 'true'
     apply_in_prd = args.env_prd == 'true'
@@ -66,26 +77,31 @@ def add_apikey(client_apikey):
     if(apply_in_tst):
         tst_session=start_session(args.aws_tst_access_key_id, args.aws_tst_secret_access_key, args.aws_tst_region_name)
         tst_table = get_db_table(tst_session)
-        tst_table.put_item(Item=client_apikey)
+        tst_item = get_client_api_key(apikey, env='tst')
+        tst_table.put_item(Item=prd_item)
+        print(json_serialize(tst_item))
         print("Done in test!")
     
     if(apply_in_stg):
         stg_session=start_session(args.aws_stg_access_key_id, args.aws_stg_secret_access_key, args.aws_stg_region_name)
         stg_table = get_db_table(stg_session)
-        stg_table.put_item(Item=client_apikey)
+        stg_item = get_client_api_key(apikey, env='stg')
+        stg_table.put_item(Item=prd_item)
+        print(json_serialize(stg_item))
         print("Done in staging!")
     
     if(apply_in_prd):
         prd_session=start_session(args.aws_prd_access_key_id, args.aws_prd_secret_access_key, args.aws_prd_region_name)
         prd_table = get_db_table(prd_session)
-        prd_table.put_item(Item=client_apikey)
+        prd_item = get_client_api_key(apikey, env='prd')
+        prd_table.put_item(Item=prd_item)
+        print(json_serialize(prd_item))
         print("Done in production!")
 
 def main():
-    new_client_apikey = generate_client_api_key()
-    print("Adding new client apikey...")
-    add_apikey(new_client_apikey)
-    print(json_serialize(new_client_apikey))
+    apikey = str(uuid.uuid4())
+    print(f"Adding new client apikey: {apikey}")
+    add_apikey(apikey)
     sys.exit()
 
 if __name__ == "__main__":

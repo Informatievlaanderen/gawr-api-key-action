@@ -30,21 +30,32 @@ parser.add_argument('--aws-prd-secret-access-key', required=True)
 parser.add_argument('--aws-prd-region-name', required=False, default='eu-west-1')
 
 args = parser.parse_args()
-  
+
+usage_plan_ids = {
+    "anon": {
+        "tst":"l80flj",
+        "stg":"dyzrte",
+        "prd":"2wb5cd",
+    },
+    "standard": {
+        "tst":"yhlc48",
+        "stg":"oh8xgc",
+        "prd":"m8vqe3",
+    },
+    "unlimited": {
+        "tst":"6rhww4",
+        "stg":"5fbb32",
+        "prd":"r5patr",
+    }
+}
+
 def start_session(aws_access_key_id, aws_secret_access_key, region_name):
     return boto3.Session(aws_access_key_id, aws_secret_access_key, region_name=region_name)
 
 def get_db_table(session):
     return session.resource('dynamodb').Table('basisregisters-api-gate-keys')
 
-def get_client_attribute_updates(apikey):
-    if(args.plan == 'anon'):
-        usage_plan_id = 'l80flj'
-    elif(args.plan == 'unlimited'):
-        usage_plan_id = '6rhww4'
-    else:
-        usage_plan_id = 'yhlc48'
-
+def get_client_attribute_updates(env):
     return {
         "SyncAccess": {
             "Action": "PUT", 
@@ -52,7 +63,7 @@ def get_client_attribute_updates(apikey):
         },
         "UsagePlanID": {
             "Action": "PUT", 
-            "Value": usage_plan_id
+            "Value":  usage_plan_ids[args.plan][env]
         },
         "Description": {
             "Action": "PUT", 
@@ -80,40 +91,38 @@ def update_apikey(apikey):
     apply_in_stg = args.env_stg == 'true'
     apply_in_prd = args.env_prd == 'true'
 
-    client_attribute = get_client_attribute_updates(apikey)
-
     if(apply_in_tst):
         tst_session=start_session(args.aws_tst_access_key_id, args.aws_tst_secret_access_key, args.aws_tst_region_name)
         tst_table = get_db_table(tst_session)
+        tst_item = get_client_attribute_updates(env='tst')
         tst_result = tst_table.update_item(
             Key={"ApiKey": apikey},
-            AttributeUpdates= client_attribute,
+            AttributeUpdates= tst_item,
             ReturnValues="ALL_NEW"
         )
-        print("In test:")
-        print(tst_result)
+        print(f"In test:{tst_result}")
     
     if(apply_in_stg):
         stg_session=start_session(args.aws_stg_access_key_id, args.aws_stg_secret_access_key, args.aws_stg_region_name)
         stg_table = get_db_table(stg_session)
+        stg_item = get_client_attribute_updates(env='stg')
         stg_result = stg_table.update_item(
             Key={"ApiKey": apikey},
-            AttributeUpdates= client_attribute,
+            AttributeUpdates= stg_item,
             ReturnValues="ALL_NEW"
         )
-        print("In staging:")
-        print(stg_result)
+        print(f"In staging: {stg_result}")
     
     if(apply_in_prd):
         prd_session=start_session(args.aws_prd_access_key_id, args.aws_prd_secret_access_key, args.aws_prd_region_name)
         prd_table = get_db_table(prd_session)
+        prd_item = get_client_attribute_updates(env='prd')
         prd_result = prd_table.update_item(
             Key={"ApiKey": apikey},
-            AttributeUpdates= client_attribute,
+            AttributeUpdates= prd_item,
             ReturnValues="ALL_NEW"
         )
-        print("In production:")
-        print(prd_result)
+        print(f"In production: {prd_result}")
 
 def main():
     if(args.apikey == None):

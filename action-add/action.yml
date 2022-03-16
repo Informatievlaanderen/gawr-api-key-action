@@ -75,7 +75,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.1-add'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.2-add'
   args:
     - ${{ inputs.client }}
     - ${{ inputs.email }}
