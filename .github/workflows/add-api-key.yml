@@ -12,6 +12,11 @@ on:
         description: 'Grant sync access'
         required: true
 
+      revoke-access:
+        type: boolean
+        description: 'Revoke access'
+        required: true
+
       client:
         description: 'ClientName'     
         required: true
@@ -73,3 +78,6 @@ jobs:
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+
+          revoke-access: ${{ github.event.inputs.revoke-access }}
+

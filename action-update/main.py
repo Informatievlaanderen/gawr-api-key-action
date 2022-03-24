@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser(description='put new client apikey')
 parser.add_argument('-k','--apikey', help='apikey', required=True)
 parser.add_argument('-c','--client', help='client name', required=True)
 parser.add_argument('-e','--email', help='email', required=True)
+parser.add_argument('--revoke-access', help='revoked', required=False, default='false')
 parser.add_argument('-p','--plan', help='plan options are ["anon", "standard", "unlimited"]', required=True, default="standard")
 
 parser.add_argument('--access-sync', help='["true", "false"] default: false', required=False, default='false')
@@ -72,6 +73,10 @@ def get_client_attribute_updates(env):
         "WrAccess": {
             "Action": "PUT", 
             "Value": args.access_road_registry == 'true'
+        },
+        "Revoked": {
+            "Action": "PUT", 
+            "Value": args.revoke_access == 'true'
         },
         "ClientName": {
             "Action": "PUT", 

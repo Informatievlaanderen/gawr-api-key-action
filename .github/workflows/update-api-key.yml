@@ -16,6 +16,11 @@ on:
         description: 'Grant sync access'
         required: true
 
+      revoke-access:
+        type: boolean
+        description: 'Revoke access'
+        required: true
+
       client:
         description: 'ClientName'     
         required: true

@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser(description='add new client apikey')
 parser.add_argument('-c','--client', help='client name', required=True)
 parser.add_argument('-e','--email', help='email', required=True)
 parser.add_argument('-p','--plan', help='plan options are ["anon", "standard", "unlimited"]', required=True, default="standard")
+parser.add_argument('--revoke-access', help='["true", "false"] default: false', required=False, default='false')
 
 parser.add_argument('--access-sync', help='["true", "false"] default: false', required=False, default='false')
 parser.add_argument('--access-road-registry', help='["true", "false"] default: false', required=False, default='false')
@@ -61,6 +62,7 @@ def get_client_api_key(apikey, env):
             "UsagePlanID": usage_plan_ids[args.plan][env],
             "Description": args.email,
             "WrAccess": args.access_road_registry == 'true',
+            "Revoked": args.revoke_access == 'true',
             "ClientName": args.client,
             "Plan": args.plan
     }
