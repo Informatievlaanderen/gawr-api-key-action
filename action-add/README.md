@@ -31,6 +31,7 @@ on:
         description: 'Plan'
         options:
         - anon
+        - abuse
         - standard
         - unlimited
         default: standard
@@ -87,7 +88,7 @@ jobs:
 |--------|-------------|---------|----------|
 | client | The client name | - | Yes |
 | email | The client email | - | Yes |
-| plan | Plan type `anon`, `standard`, `unlimited` | `anon` | Yes |
+| plan | Plan type `anon`, `abuse`, `standard`, `unlimited` | `anon` | Yes |
 | access-sync | Grant sync access (`true` / `false`) | `false` | Yes |
 | access-road-registry | Grant road-registry access (`true` / `false`) | `false` | Yes |
 | env-tst | Apply in test env. (`true` / `false`) | `false` | Yes |

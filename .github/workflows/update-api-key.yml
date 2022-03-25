@@ -34,6 +34,7 @@ on:
         description: 'Plan'
         options:
         - anon
+        - abuse
         - standard
         - unlimited
         default: standard
@@ -83,3 +84,5 @@ jobs:
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+
+          revoke: ${{ github.event.inputs.revoke-access }}

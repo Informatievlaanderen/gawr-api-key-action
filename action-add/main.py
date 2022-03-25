@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(description='add new client apikey')
 
 parser.add_argument('-c','--client', help='client name', required=True)
 parser.add_argument('-e','--email', help='email', required=True)
-parser.add_argument('-p','--plan', help='plan options are ["anon", "standard", "unlimited"]', required=True, default="standard")
+parser.add_argument('-p','--plan', help='plan options are ["anon", "abuse", "standard", "unlimited"]', required=True, default="standard")
 parser.add_argument('--revoke-access', help='["true", "false"] default: false', required=False, default='false')
 
 parser.add_argument('--access-sync', help='["true", "false"] default: false', required=False, default='false')
@@ -36,6 +36,11 @@ usage_plan_ids = {
         "tst":"l80flj",
         "stg":"dyzrte",
         "prd":"2wb5cd",
+    },
+    "abuse": {
+        "tst":"jgivsn",
+        "stg":"ccfy0v",
+        "prd":"9nrj1z",
     },
     "standard": {
         "tst":"yhlc48",

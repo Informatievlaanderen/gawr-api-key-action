@@ -11,7 +11,7 @@ inputs:
     required: true
   
   plan:
-    description: 'options ["anon", "standard", "unlimited"]'
+    description: 'options ["anon", "abuse", "standard", "unlimited"]'
     required: true
 
   access-sync:
@@ -79,7 +79,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.3-add'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.4-add'
   args:
     - ${{ inputs.client }}
     - ${{ inputs.email }}

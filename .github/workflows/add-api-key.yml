@@ -30,6 +30,7 @@ on:
         description: 'Plan'
         options:
         - anon
+        - abuse
         - standard
         - unlimited
         default: standard
