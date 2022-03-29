@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: remove client apikey
-      uses: informatievlaanderen/gawr-api-key-action/action-remove@test
+      uses: informatievlaanderen/gawr-api-key-action/actions/remove@test
       with:
           apikey: ${{github.event.inputs.api-key}}
 
@@ -45,3 +45,11 @@ jobs:
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+
+          aws-tst-stage-name: ${{ secrets.AWS_TST_STAGE_NAME }}
+          aws-stg-stage-name: ${{ secrets.AWS_STG_STAGE_NAME }}
+          aws-prd-stage-name: ${{ secrets.AWS_PRD_STAGE_NAME }}
+
+          aws-tst-api-id: ${{ secrets.AWS_TST_API_ID }}
+          aws-stg-api-id: ${{ secrets.AWS_STG_API_ID }}
+          aws-prd-api-id: ${{ secrets.AWS_PRD_API_ID }}

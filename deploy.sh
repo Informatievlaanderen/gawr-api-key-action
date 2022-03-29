@@ -7,9 +7,9 @@ docker image rm -f ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-rem
 docker image rm -f ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-update
 
 # Build containers
-docker build -t ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-add    -f ./action-add/Dockerfile      ./action-add
-docker build -t ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-remove -f ./action-remove/Dockerfile   ./action-remove
-docker build -t ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-update -f ./action-update/Dockerfile   ./action-update
+docker build -t ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-add    -f ./Dockerfile.action-add .
+docker build -t ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-remove -f ./Dockerfile.action-remove .
+docker build -t ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-update -f ./Dockerfile.action-update .
 
 # Push containers to registry
 docker push ghcr.io/informatievlaanderen/gawr-api-key-action:$VERSION-add   

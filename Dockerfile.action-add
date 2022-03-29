@@ -1,0 +1,16 @@
+FROM python:3.10.2-slim
+
+WORKDIR /app
+
+COPY ./LICENSE ./
+COPY ./install-packages.sh ./
+COPY ./src/*.py ./
+COPY ./actions/add/* ./
+
+RUN chmod +x install-packages.sh
+RUN chmod +x entrypoint.sh
+RUN chmod +x *.py
+
+RUN ./install-packages.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]

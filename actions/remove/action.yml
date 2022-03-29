@@ -1,30 +1,10 @@
-name: gawr-add-apikey-action
+name: gawr-remove-apikey-action
 description: GAWR ApiKey Management Tool
 author: Digitaal Vlaanderen
 inputs:
-  client:
-    description: 'clientname'
+  apikey:
+    description: 'ApiKey'
     required: true
-
-  email:
-    description: 'email'
-    required: true
-  
-  plan:
-    description: 'options ["anon", "abuse", "standard", "unlimited"]'
-    required: true
-
-  access-sync:
-    description: 'Grant sync access'
-    required: true
-
-  access-road-registry:
-    description: 'Grant road-registry access'
-    required: true
-
-  revoke-access:
-    description: 'Revoke access'
-    required: false
 
   env-tst:
     description: 'Test'
@@ -51,6 +31,14 @@ inputs:
     required: false
     default: 'eu-west-1'
 
+  aws-tst-api-id:
+    description: 'AWS Test api id'
+    required: true
+
+  aws-tst-stage-name:
+    description: 'AWS Test stage name'
+    required: true
+
   aws-stg-access-key-id:
     description: 'AWS Acces Key Id Staging ENV'
     required: true
@@ -63,6 +51,14 @@ inputs:
     description: 'AWS Region name Staging ENV'
     required: false
     default: 'eu-west-1'
+
+  aws-stg-api-id:
+    description: 'AWS Staging api id'
+    required: true
+
+  aws-stg-stage-name:
+    description: 'AWS Staging stage name'
+    required: true
 
   aws-prd-access-key-id:
     description: 'AWS Acces Key Id Production ENV'
@@ -77,28 +73,37 @@ inputs:
     required: false
     default: 'eu-west-1'
 
+  aws-prd-api-id:
+    description: 'AWS Production api id'
+    required: true
+
+  aws-prd-stage-name:
+    description: 'AWS Production stage name'
+    required: true
+
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:2.0.0-remove'
   args:
-    - ${{ inputs.client }}
-    - ${{ inputs.email }}
-    - ${{ inputs.plan }}
-    - ${{ inputs.access-sync }}
-    - ${{ inputs.access-road-registry }}
+    - ${{ inputs.apikey }}
     - ${{ inputs.env-tst }}
-    - ${{ inputs.env-stg }}
-    - ${{ inputs.env-prd }}
     - ${{ inputs.aws-tst-access-key-id}}
     - ${{ inputs.aws-tst-secret-access-key}}
     - ${{ inputs.aws-tst-region-name}}
+    - ${{ inputs.aws-tst-api-id }}
+    - ${{ inputs.aws-tst-stage-name }}
+    - ${{ inputs.env-stg }}
     - ${{ inputs.aws-stg-access-key-id}}
     - ${{ inputs.aws-stg-secret-access-key}}
     - ${{ inputs.aws-stg-region-name}}
+    - ${{ inputs.aws-stg-api-id }}
+    - ${{ inputs.aws-stg-stage-name }}
+    - ${{ inputs.env-prd }}
     - ${{ inputs.aws-prd-access-key-id}}
     - ${{ inputs.aws-prd-secret-access-key}}
     - ${{ inputs.aws-prd-region-name}}
-    - ${{ inputs.revoke-access }}
+    - ${{ inputs.aws-prd-api-id }}
+    - ${{ inputs.aws-prd-stage-name }}
 branding:
   icon: 'terminal'
   color: 'yellow'
