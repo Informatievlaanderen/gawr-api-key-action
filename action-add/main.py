@@ -29,6 +29,8 @@ parser.add_argument('--aws-prd-access-key-id', required=True)
 parser.add_argument('--aws-prd-secret-access-key', required=True)
 parser.add_argument('--aws-prd-region-name', required=False, default='eu-west-1')
 
+parser.add_argument('--access-tickets', help='["true", "false"] default: true', required=False, default='true')
+
 args = parser.parse_args()
 
 usage_plan_ids = {
@@ -69,7 +71,8 @@ def get_client_api_key(apikey, env):
             "WrAccess": args.access_road_registry == 'true',
             "Revoked": args.revoke_access == 'true',
             "ClientName": args.client,
-            "Plan": args.plan
+            "Plan": args.plan,
+            "Tickets": args.access_tickets == 'true',
     }
     return client_api_key
 

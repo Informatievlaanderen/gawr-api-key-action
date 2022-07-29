@@ -26,6 +26,10 @@ inputs:
     description: 'Grant road-registry access'
     required: true
 
+  access-tickets:
+    description: 'Tickets'
+    required: true
+
   revoke-access:
     description: 'Revoke access'
     required: false
@@ -83,7 +87,7 @@ inputs:
   
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.4-update'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.5-update'
   args:
     - ${{ inputs.apikey }}
     - ${{ inputs.client }}
@@ -104,6 +108,7 @@ runs:
     - ${{ inputs.aws-prd-secret-access-key}}
     - ${{ inputs.aws-prd-region-name}}
     - ${{ inputs.revoke-access }}
+    - ${{ inputs.access-tickets }}
 branding:
   icon: 'terminal'
   color: 'yellow'

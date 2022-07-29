@@ -8,12 +8,12 @@ name: Add new client apikey
 on:
   workflow_dispatch:
     inputs:
-      grant-access-road-registry:
+      access-road-registry:
         type: boolean
         description: 'Grant road-registry access'
         required: true 
          
-      grant-access-sync:
+      access-sync:
         type: boolean
         description: 'Grant sync access'
         required: true
@@ -50,6 +50,11 @@ on:
         type: boolean
         description: 'Production'
         required: true
+         
+      access-tickets:
+        type: boolean
+        description: 'Tickets'
+        required: true
 
 jobs:
   gawr:
@@ -62,8 +67,8 @@ jobs:
           email: ${{ github.event.inputs.email }}
           plan:  ${{ github.event.inputs.plan }}
           
-          access-sync:  ${{ github.event.inputs.grant-access-sync }}
-          access-road-registry:  ${{ github.event.inputs.grant-access-road-registry }}
+          access-sync:  ${{ github.event.inputs.access-sync }}
+          access-road-registry:  ${{ github.event.inputs.access-road-registry }}
           
           env-tst:  ${{ github.event.inputs.apply-env-tst }}
           env-stg:  ${{ github.event.inputs.apply-env-stg }}
@@ -80,6 +85,8 @@ jobs:
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+
+          access-tickets:  ${{ github.event.inputs.access-tickets }}
 ```
 
 ### Inputs
@@ -103,6 +110,7 @@ jobs:
 | aws-tst-region-name | AWS region name test env | `eu-west-1` | No |
 | aws-stg-region-name | AWS region name test env | `eu-west-1` | No |
 | aws-prd-region-name | AWS region name test env | `eu-west-1` | No |
+| access-tickets | Grant tickets access (`true` / `false`) | `true` | Yes |
 
 ### Outputs
 
@@ -198,12 +206,12 @@ on:
        description: 'Api Key'     
        required: true
 
-      grant-access-road-registry:
+      access-road-registry:
         type: boolean
         description: 'Grant road-registry access'
         required: true 
          
-      grant-access-sync:
+      access-sync:
         type: boolean
         description: 'Grant sync access'
         required: true
@@ -240,6 +248,11 @@ on:
         type: boolean
         description: 'Production'
         required: true
+         
+      access-tickets:
+        type: boolean
+        description: 'Tickets'
+        required: true
 
 jobs:
   gawr:
@@ -253,8 +266,8 @@ jobs:
           email: ${{ github.event.inputs.email }}
           plan:  ${{ github.event.inputs.plan }}
           
-          access-sync:  ${{ github.event.inputs.grant-access-sync }}
-          access-road-registry:  ${{ github.event.inputs.grant-access-road-registry }}
+          access-sync:  ${{ github.event.inputs.access-sync }}
+          access-road-registry:  ${{ github.event.inputs.access-road-registry }}
           
           env-tst:  ${{ github.event.inputs.apply-env-tst }}
           env-stg:  ${{ github.event.inputs.apply-env-stg }}
@@ -271,6 +284,8 @@ jobs:
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+
+          access-tickets:  ${{ github.event.inputs.access-tickets }}
 ```
 
 ### Inputs
@@ -295,6 +310,7 @@ jobs:
 | aws-tst-region-name | AWS region name test env | `eu-west-1` | No |
 | aws-stg-region-name | AWS region name test env | `eu-west-1` | No |
 | aws-prd-region-name | AWS region name test env | `eu-west-1` | No |
+| access-tickets | Grant tickets access (`true` / `false`) | `yes` | Yes |
 
 ### Outputs
 
