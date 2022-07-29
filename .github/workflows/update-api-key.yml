@@ -10,12 +10,12 @@ on:
         type: boolean
         description: 'Grant road-registry access'
         required: true 
-         
+
       grant-access-sync:
         type: boolean
         description: 'Grant sync access'
         required: true
-         
+
       grant-access-tickets:
         type: boolean
         description: 'tickets'
