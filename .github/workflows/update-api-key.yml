@@ -15,6 +15,11 @@ on:
         type: boolean
         description: 'Grant sync access'
         required: true
+         
+      grant-access-tickets:
+        type: boolean
+        description: 'tickets'
+        required: true
 
       revoke-access:
         type: boolean
@@ -86,3 +91,4 @@ jobs:
           aws-prd-region-name: eu-west-1
 
           revoke: ${{ github.event.inputs.revoke-access }}
+          access-tickets: ${{ github.event.inputs.grant-access-tickets }}
