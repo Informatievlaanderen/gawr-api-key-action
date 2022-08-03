@@ -83,7 +83,7 @@ inputs:
   
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.5-update'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.6-update'
   args:
     - ${{ inputs.apikey }}
     - ${{ inputs.client }}
