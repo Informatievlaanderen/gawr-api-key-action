@@ -23,11 +23,11 @@ on:
         required: true
 
       client:
-        description: 'ClientName'     
+        description: 'ClientName'
         required: true
         
       email:
-        description: 'Email'     
+        description: 'Email'
         required: true
 
       plan:
@@ -40,10 +40,10 @@ on:
         - unlimited
         default: standard
 
-      apply-env-tst:
-        type: boolean
-        description: 'Test'
-        required: true
+      # apply-env-tst:
+      #   type: boolean
+      #   description: 'Test'
+      #   required: true
 
       apply-env-stg:
         type: boolean
@@ -55,6 +55,11 @@ on:
         description: 'Production'
         required: true
 
+      apply-env-newprd:
+        type: boolean
+        description: 'New Production'
+        required: true
+
 jobs:
   gawr:
     runs-on: ubuntu-latest
@@ -62,28 +67,32 @@ jobs:
     - name: Add new client apikey
       uses: informatievlaanderen/gawr-api-key-action/action-add@main
       with:
-          client:  ${{ github.event.inputs.client }}
+          client: ${{ github.event.inputs.client }}
           email: ${{ github.event.inputs.email }}
-          plan:  ${{ github.event.inputs.plan }}
+          plan: ${{ github.event.inputs.plan }}
           
-          access-sync:  ${{ github.event.inputs.grant-access-sync }}
-          access-road-registry:  ${{ github.event.inputs.grant-access-road-registry }}
+          access-sync: ${{ github.event.inputs.grant-access-sync }}
+          access-road-registry: ${{ github.event.inputs.grant-access-road-registry }}
           
-          env-tst:  ${{ github.event.inputs.apply-env-tst }}
-          env-stg:  ${{ github.event.inputs.apply-env-stg }}
-          env-prd:  ${{ github.event.inputs.apply-env-prd }}
+          env-tst: false #${{ github.event.inputs.apply-env-tst }}
+          env-stg: ${{ github.event.inputs.apply-env-stg }}
+          env-prd: ${{ github.event.inputs.apply-env-prd }}
+          env-newprd: ${{ github.event.inputs.apply-env-newprd }}
           
           aws-tst-access-key-id: ${{ secrets.AWS_TST_ACCESS_KEY_ID }}
           aws-stg-access-key-id: ${{ secrets.AWS_STG_ACCESS_KEY_ID }}
           aws-prd-access-key-id: ${{ secrets.AWS_PRD_ACCESS_KEY_ID }}
+          aws-newprd-access-key-id: ${{ secrets.AWS_NEWPRD_ACCESS_KEY_ID }}
 
           aws-tst-secret-access-key: ${{ secrets.AWS_TST_SECRET_ACCESS_KEY }}
           aws-stg-secret-access-key: ${{ secrets.AWS_STG_SECRET_ACCESS_KEY }}
           aws-prd-secret-access-key: ${{ secrets.AWS_PRD_SECRET_ACCESS_KEY }}
+          aws-newprd-secret-access-key: ${{ secrets.AWS_NEWPRD_SECRET_ACCESS_KEY }}
           
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+          aws-newprd-region-name: eu-west-1
 
           revoke-access: ${{ github.event.inputs.revoke-access }}
           access-tickets: ${{ github.event.inputs.grant-access-tickets }}

@@ -16,6 +16,7 @@ parser.add_argument('--access-road-registry', help='["true", "false"] default: f
 parser.add_argument('--env-tst', help='["true", "false"] default: false', required=False, default='false')
 parser.add_argument('--env-stg', help='["true", "false"] default: false', required=False, default='false')
 parser.add_argument('--env-prd', help='["true", "false"] default: false', required=False, default='false')
+parser.add_argument('--env-newprd', help='["true", "false"] default: false', required=False, default='false')
 
 parser.add_argument('--aws-tst-access-key-id', required=True)
 parser.add_argument('--aws-tst-secret-access-key', required=True)
@@ -29,6 +30,10 @@ parser.add_argument('--aws-prd-access-key-id', required=True)
 parser.add_argument('--aws-prd-secret-access-key', required=True)
 parser.add_argument('--aws-prd-region-name', required=False, default='eu-west-1')
 
+parser.add_argument('--aws-newprd-access-key-id', required=True)
+parser.add_argument('--aws-newprd-secret-access-key', required=True)
+parser.add_argument('--aws-newprd-region-name', required=False, default='eu-west-1')
+
 parser.add_argument('--access-tickets', help='["true", "false"] default: true', required=False, default='true')
 
 args = parser.parse_args()
@@ -38,21 +43,25 @@ usage_plan_ids = {
         "tst":"l80flj",
         "stg":"dyzrte",
         "prd":"2wb5cd",
+        "newprd":"85vqi7",
     },
     "abuse": {
         "tst":"jgivsn",
         "stg":"ccfy0v",
         "prd":"9nrj1z",
+        "newprd":"wbaqmh",
     },
     "standard": {
         "tst":"yhlc48",
         "stg":"oh8xgc",
         "prd":"m8vqe3",
+        "newprd":"wrbda6",
     },
     "unlimited": {
         "tst":"6rhww4",
         "stg":"5fbb32",
         "prd":"r5patr",
+        "newprd":"y8kou4",
     }
 }
 
@@ -83,6 +92,7 @@ def add_apikey(apikey):
     apply_in_tst = args.env_tst == 'true'
     apply_in_stg = args.env_stg == 'true'
     apply_in_prd = args.env_prd == 'true'
+    apply_in_newprd = args.env_newprd == 'true'
 
     if(apply_in_tst):
         tst_session=start_session(args.aws_tst_access_key_id, args.aws_tst_secret_access_key, args.aws_tst_region_name)
@@ -107,6 +117,14 @@ def add_apikey(apikey):
         prd_table.put_item(Item=prd_item)
         print(json_serialize(prd_item))
         print("Done in production!")
+
+    if(apply_in_newprd):
+        newprd_session=start_session(args.aws_newprd_access_key_id, args.aws_newprd_secret_access_key, args.aws_newprd_region_name)
+        newprd_table = get_db_table(newprd_session)
+        newprd_item = get_client_api_key(apikey, env='newprd')
+        newprd_table.put_item(Item=newprd_item)
+        print(json_serialize(newprd_item))
+        print("Done in new production!")
 
 def main():
     apikey = str(uuid.uuid4())
