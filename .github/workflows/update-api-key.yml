@@ -39,10 +39,10 @@ on:
         - unlimited
         default: standard
 
-      # apply-env-tst:
-      #   type: boolean
-      #   description: 'Test'
-      #   required: true
+      apply-env-tst:
+        type: boolean
+        description: 'Test'
+        required: true
 
       apply-env-stg:
         type: boolean
@@ -54,10 +54,10 @@ on:
         description: 'Production'
         required: true
 
-      apply-env-newprd:
-        type: boolean
-        description: 'New Production'
-        required: true
+      # apply-env-newprd:
+      #   type: boolean
+      #   description: 'New Production'
+      #   required: true
 
 jobs:
   gawr:
@@ -74,10 +74,10 @@ jobs:
           access-sync: ${{ github.event.inputs.grant-access-sync }}
           access-road-registry: ${{ github.event.inputs.grant-access-road-registry }}
           
-          env-tst: false #${{ github.event.inputs.apply-env-tst }}
+          env-tst: ${{ github.event.inputs.apply-env-tst }}
           env-stg: ${{ github.event.inputs.apply-env-stg }}
           env-prd: ${{ github.event.inputs.apply-env-prd }}
-          env-newprd: ${{ github.event.inputs.apply-env-newprd }}
+          env-newprd: false #${{ github.event.inputs.apply-env-newprd }}
           
           aws-tst-access-key-id: ${{ secrets.AWS_TST_ACCESS_KEY_ID }}
           aws-stg-access-key-id: ${{ secrets.AWS_STG_ACCESS_KEY_ID }}
