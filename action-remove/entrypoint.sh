@@ -1,3 +1,19 @@
 #!/bin/sh -l
 
-python3 /main.py -k "${1}" --env-tst "${2}" --env-stg "${3}" --env-prd "${4}" --aws-tst-access-key-id "${5}" --aws-tst-secret-access-key "${6}" --aws-tst-region-name "${7}" --aws-stg-access-key-id "${8}" --aws-stg-secret-access-key "${9}" --aws-stg-region-name "${10}" --aws-prd-access-key-id "${11}" --aws-prd-secret-access-key "${12}"  --aws-prd-region-name "${13}";
+python3 /main.py -k "${1}"\
+ --env-tst "${2}"\
+ --env-stg "${3}"\
+ --env-prd "${4}"\
+ --env-newprd "${5}"\
+ --aws-tst-access-key-id "${6}"\
+ --aws-tst-secret-access-key "${7}"\
+ --aws-tst-region-name "${8}"\
+ --aws-stg-access-key-id "${9}"\
+ --aws-stg-secret-access-key "${10}"\
+ --aws-stg-region-name "${11}"\
+ --aws-prd-access-key-id "${12}"\
+ --aws-prd-secret-access-key "${13}"\
+ --aws-prd-region-name "${14}"\
+ --aws-newprd-access-key-id "${15}"\
+ --aws-newprd-secret-access-key "${16}"\
+ --aws-newprd-region-name "${17}";

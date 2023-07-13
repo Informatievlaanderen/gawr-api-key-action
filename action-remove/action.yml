@@ -18,6 +18,10 @@ inputs:
     description: 'Production'
     required: true
 
+  env-newprd:
+    description: 'New Production'
+    required: true
+
   aws-tst-access-key-id:
     description: 'AWS Acces Key Id Test ENV'
     required: true
@@ -57,14 +61,28 @@ inputs:
     required: false
     default: 'eu-west-1'
 
+  aws-newprd-access-key-id:
+    description: 'AWS Acces Key Id New Production ENV'
+    required: true
+
+  aws-newprd-secret-access-key:
+    description: 'AWS Secret Key New Production ENV'
+    required: true
+
+  aws-newprd-region-name:
+    description: 'AWS Region name New Production ENV'
+    required: false
+    default: 'eu-west-1'
+
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.6-remove'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.7-remove'
   args:
     - ${{ inputs.apikey }}
     - ${{ inputs.env-tst }}
     - ${{ inputs.env-stg }}
     - ${{ inputs.env-prd }}
+    - ${{ inputs.env-newprd }}
     - ${{ inputs.aws-tst-access-key-id}}
     - ${{ inputs.aws-tst-secret-access-key}}
     - ${{ inputs.aws-tst-region-name}}
@@ -74,6 +92,9 @@ runs:
     - ${{ inputs.aws-prd-access-key-id}}
     - ${{ inputs.aws-prd-secret-access-key}}
     - ${{ inputs.aws-prd-region-name}}
+    - ${{ inputs.aws-newprd-access-key-id}}
+    - ${{ inputs.aws-newprd-secret-access-key}}
+    - ${{ inputs.aws-newprd-region-name}}
 branding:
   icon: 'terminal'
   color: 'yellow'

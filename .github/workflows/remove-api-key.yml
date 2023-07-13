@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       api-key:
-       description: 'Api Key'     
+       description: 'Api Key'
        required: true
 
       apply-env-tst:
@@ -21,6 +21,11 @@ on:
         description: 'Production'
         required: true
 
+      apply-env-newprd:
+        type: boolean
+        description: 'New Production'
+        required: true
+
 jobs:
   gawr:
     runs-on: ubuntu-latest
@@ -33,15 +38,19 @@ jobs:
           env-tst:  ${{ github.event.inputs.apply-env-tst }}
           env-stg:  ${{ github.event.inputs.apply-env-stg }}
           env-prd:  ${{ github.event.inputs.apply-env-prd }}
+          env-newprd:  ${{ github.event.inputs.apply-env-newprd }}
           
           aws-tst-access-key-id: ${{ secrets.AWS_TST_ACCESS_KEY_ID }}
           aws-stg-access-key-id: ${{ secrets.AWS_STG_ACCESS_KEY_ID }}
           aws-prd-access-key-id: ${{ secrets.AWS_PRD_ACCESS_KEY_ID }}
+          aws-newprd-access-key-id: ${{ secrets.AWS_NEWPRD_ACCESS_KEY_ID }}
 
           aws-tst-secret-access-key: ${{ secrets.AWS_TST_SECRET_ACCESS_KEY }}
           aws-stg-secret-access-key: ${{ secrets.AWS_STG_SECRET_ACCESS_KEY }}
           aws-prd-secret-access-key: ${{ secrets.AWS_PRD_SECRET_ACCESS_KEY }}
+          aws-newprd-secret-access-key: ${{ secrets.AWS_NEWPRD_SECRET_ACCESS_KEY }}
           
           aws-tst-region-name: eu-west-1
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
+          aws-newprd-region-name: eu-west-1

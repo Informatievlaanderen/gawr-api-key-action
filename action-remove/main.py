@@ -10,6 +10,7 @@ parser.add_argument('-k','--apikey', help='apikey', required=True)
 parser.add_argument('--env-tst', help='["true", "false"] default: false', required=False, default='false')
 parser.add_argument('--env-stg', help='["true", "false"] default: false', required=False, default='false')
 parser.add_argument('--env-prd', help='["true", "false"] default: false', required=False, default='false')
+parser.add_argument('--env-newprd', help='["true", "false"] default: false', required=False, default='false')
 
 parser.add_argument('--aws-tst-access-key-id', required=True)
 parser.add_argument('--aws-tst-secret-access-key', required=True)
@@ -23,6 +24,10 @@ parser.add_argument('--aws-prd-access-key-id', required=True)
 parser.add_argument('--aws-prd-secret-access-key', required=True)
 parser.add_argument('--aws-prd-region-name', required=False, default='eu-west-1')
 
+parser.add_argument('--aws-newprd-access-key-id', required=True)
+parser.add_argument('--aws-newprd-secret-access-key', required=True)
+parser.add_argument('--aws-newprd-region-name', required=False, default='eu-west-1')
+
 args = parser.parse_args()
   
 def start_session(aws_access_key_id, aws_secret_access_key, region_name):
@@ -35,6 +40,7 @@ def remove_apikey(apikey):
     apply_in_tst = args.env_tst == 'true'
     apply_in_stg = args.env_stg == 'true'
     apply_in_prd = args.env_prd == 'true'
+    apply_in_newprd = args.env_newprd == 'true'
     client_apikey= {
         "ApiKey": apikey
     }
@@ -56,6 +62,12 @@ def remove_apikey(apikey):
         prd_table = get_db_table(prd_session)
         prd_table.delete_item(Key=client_apikey)
         print("Done in production!")
+
+    if(apply_in_newprd):
+        newprd_session=start_session(args.aws_newprd_access_key_id, args.aws_newprd_secret_access_key, args.aws_newprd_region_name)
+        newprd_table = get_db_table(newprd_session)
+        newprd_table.delete_item(Key=client_apikey)
+        print("Done in new production!")
 
 def main():
     print("Removing apikey...")
