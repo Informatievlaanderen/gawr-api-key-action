@@ -48,16 +48,11 @@ on:
         type: boolean
         description: 'Staging'
         required: true
-        
-      apply-env-prd:
-        type: boolean
-        description: 'Production'
-        required: true
 
-      # apply-env-newprd:
-      #   type: boolean
-      #   description: 'New Production'
-      #   required: true
+      apply-env-newprd:
+        type: boolean
+        description: 'New Production'
+        required: true
 
 jobs:
   gawr:
@@ -76,8 +71,8 @@ jobs:
           
           env-tst: ${{ github.event.inputs.apply-env-tst }}
           env-stg: ${{ github.event.inputs.apply-env-stg }}
-          env-prd: ${{ github.event.inputs.apply-env-prd }}
-          env-newprd: false #${{ github.event.inputs.apply-env-newprd }}
+          env-prd: false #${{ github.event.inputs.apply-env-prd }}
+          env-newprd: ${{ github.event.inputs.apply-env-newprd }}
           
           aws-tst-access-key-id: ${{ secrets.AWS_TST_ACCESS_KEY_ID }}
           aws-stg-access-key-id: ${{ secrets.AWS_STG_ACCESS_KEY_ID }}
