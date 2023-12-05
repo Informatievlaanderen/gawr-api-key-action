@@ -92,3 +92,7 @@ jobs:
           revoke-access: ${{ github.event.inputs.revoke-access }}
           access-tickets: ${{ github.event.inputs.grant-access-tickets }}
 
+          aws-tst-redis-sync-url: ${{ secrets.AWS_TST_REDIS_SYNC_URL }}
+          aws-stg-redis-sync-url: ${{ secrets.AWS_STG_REDIS_SYNC_URL }}
+          aws-prd-redis-sync-url: ${{ secrets.AWS_PRD_REDIS_SYNC_URL }}
+          aws-newprd-redis-sync-url: ${{ secrets.AWS_NEWPRD_REDIS_SYNC_URL }}

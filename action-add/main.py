@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys, json, argparse, uuid, boto3
+import sys, json, argparse, uuid, boto3, requests
 
 # args
 parser = argparse.ArgumentParser(description='add new client apikey')
@@ -36,6 +36,11 @@ parser.add_argument('--aws-newprd-region-name', required=False, default='eu-west
 
 parser.add_argument('--access-tickets', help='["true", "false"] default: true', required=False, default='true')
 
+parser.add_argument('--aws-tst-redis-sync-url', required=False, default='')
+parser.add_argument('--aws-stg-redis-sync-url', required=False, default='')
+parser.add_argument('--aws-prd-redis-sync-url', required=False, default='')
+parser.add_argument('--aws-newprd-redis-sync-url', required=False, default='')
+
 args = parser.parse_args()
 
 usage_plan_ids = {
@@ -64,6 +69,32 @@ usage_plan_ids = {
         "newprd":"y8kou4",
     }
 }
+
+def sync_redis_all_env(apikey):
+    sync_tst = args.aws_tst_redis_sync_url != ''
+    sync_stg = args.aws_stg_redis_sync_url != ''
+    sync_prd = args.aws_prd_redis_sync_url != ''
+    sync_newprd = args.aws_newprd_redis_sync_url != ''
+    
+    if sync_tst:
+        sync_redis(args.aws_tst_redis_sync_url, apikey)
+    if sync_stg:
+        sync_redis(args.aws_stg_redis_sync_url, apikey)
+    if sync_prd:
+        sync_redis(args.aws_prd_redis_sync_url, apikey)
+    if sync_newprd:
+        sync_redis(args.aws_newprd_redis_sync_url, apikey)
+        
+def sync_redis(base_url,apikey): 
+    url = f"{base_url}/?x-api-key={apikey}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        print(f"Redis sync OK!")
+        return
+    
+    print(f"Error: {response.status_code}")
+    print(response.text)
 
 def start_session(aws_access_key_id, aws_secret_access_key, region_name):
     return boto3.Session(aws_access_key_id, aws_secret_access_key, region_name=region_name)
@@ -125,6 +156,8 @@ def add_apikey(apikey):
         newprd_table.put_item(Item=newprd_item)
         print(json_serialize(newprd_item))
         print("Done in new production!")
+
+    sync_redis_all_env(apikey)
 
 def main():
     apikey = str(uuid.uuid4())
