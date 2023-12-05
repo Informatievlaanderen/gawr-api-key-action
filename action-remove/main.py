@@ -75,7 +75,10 @@ def remove_apikey(apikey):
     client_apikey= {
         "ApiKey": apikey
     }
-
+    
+    #FIRST REMOVE IN REDIS THEN DYNAMO
+    sync_redis_all_env(apikey)
+    
     if(apply_in_tst):
         tst_session=start_session(args.aws_tst_access_key_id, args.aws_tst_secret_access_key, args.aws_tst_region_name)
         tst_table = get_db_table(tst_session)
@@ -99,8 +102,6 @@ def remove_apikey(apikey):
         newprd_table = get_db_table(newprd_session)
         newprd_table.delete_item(Key=client_apikey)
         print("Done in new production!")
-    
-    sync_redis_all_env(apikey)
 
 def main():
     print("Removing apikey...")
