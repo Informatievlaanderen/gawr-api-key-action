@@ -23,4 +23,8 @@ python3 /main.py -k "${1}"\
  --aws-newprd-secret-access-key "${21}"\
  --aws-newprd-region-name "${22}"\
  --revoke-access "${23}"\
- --access-tickets "true";
+ --access-tickets "true"\
+ --aws-tst-redis-sync-url "${24}"\
+ --aws-stg-redis-sync-url "${25}"\
+ --aws-prd-redis-sync-url "${26}"\
+ --aws-newprd-redis-sync-url "${27}";

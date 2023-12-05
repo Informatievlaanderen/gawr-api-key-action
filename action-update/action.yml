@@ -98,6 +98,26 @@ inputs:
     required: false
     default: 'eu-west-1'
   
+  aws-tst-redis-sync-url:
+    description: 'Redis cache sync url'
+    required: false
+    default: ''
+
+  aws-stg-redis-sync-url:
+    description: 'Redis cache sync url'
+    required: false
+    default: ''
+
+  aws-prd-redis-sync-url:
+    description: 'Redis cache sync url'
+    required: false
+    default: ''
+
+  aws-newprd-redis-sync-url:
+    description: 'Redis cache sync url'
+    required: false
+    default: ''
+  
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.7-update'
@@ -125,6 +145,10 @@ runs:
     - ${{ inputs.aws-newprd-secret-access-key}}
     - ${{ inputs.aws-newprd-region-name}}
     - ${{ inputs.revoke-access }}
+    - ${{ inputs.aws-tst-redis-sync-url }}
+    - ${{ inputs.aws-stg-redis-sync-url }}
+    - ${{ inputs.aws-prd-redis-sync-url }}
+    - ${{ inputs.aws-newprd-redis-sync-url }}
 branding:
   icon: 'terminal'
   color: 'yellow'
