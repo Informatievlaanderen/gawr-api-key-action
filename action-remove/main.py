@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys, argparse, uuid, boto3
+import sys, argparse, uuid, boto3, requests
 
 # args
 parser = argparse.ArgumentParser(description='remove new client apikey')

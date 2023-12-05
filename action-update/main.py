@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import os, sys, json, argparse, uuid, boto3
+import os, sys, json, argparse, uuid, boto3, requests
 
 # args
 parser = argparse.ArgumentParser(description='put new client apikey')
