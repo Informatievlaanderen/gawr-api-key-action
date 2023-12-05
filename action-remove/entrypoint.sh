@@ -16,4 +16,8 @@ python3 /main.py -k "${1}"\
  --aws-prd-region-name "${14}"\
  --aws-newprd-access-key-id "${15}"\
  --aws-newprd-secret-access-key "${16}"\
- --aws-newprd-region-name "${17}";
+ --aws-newprd-region-name "${17}"\
+ --aws-tst-redis-sync-url "${18}"\
+ --aws-stg-redis-sync-url "${19}"\
+ --aws-prd-redis-sync-url "${20}"\
+ --aws-newprd-redis-sync-url "${21}";

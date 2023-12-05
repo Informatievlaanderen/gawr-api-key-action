@@ -60,6 +60,11 @@ jobs:
           aws-stg-region-name: eu-west-1
           aws-prd-region-name: eu-west-1
           aws-newprd-region-name: eu-west-1
+
+          aws-tst-redis-sync-url: ${{ secrets.AWS_TST_REDIS_SYNC_URL }}
+          aws-stg-redis-sync-url: ${{ secrets.AWS_STG_REDIS_SYNC_URL }}
+          aws-prd-redis-sync-url: ${{ secrets.AWS_PRD_REDIS_SYNC_URL }}
+          aws-newprd-redis-sync-url: ${{ secrets.AWS_NEWPRD_REDIS_SYNC_URL }}
 ```
 
 ### Inputs
@@ -85,4 +90,3 @@ jobs:
 | aws-newprd-region-name | AWS region name new production env | `eu-west-1` | No |
 
 ### Outputs
-
