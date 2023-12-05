@@ -90,7 +90,7 @@ def sync_redis(base_url,apikey):
     url = f"{base_url}/?x-api-key={apikey}"
     response = requests.get(url)
 
-    if response.status_code == 200:
+    if response.status_code == 202:
         print(f"Redis sync OK!")
         return
     
