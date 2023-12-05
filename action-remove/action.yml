@@ -96,7 +96,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.7-remove'
+  image: 'docker://ghcr.io/informatievlaanderen/gawr-api-key-action:1.0.8-remove'
   args:
     - ${{ inputs.apikey }}
     - ${{ inputs.env-tst }}
